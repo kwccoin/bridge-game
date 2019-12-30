@@ -1,7 +1,11 @@
 var http = require("http");
 var url = require('url');
 var fs = require('fs');
-var io = require('socket.io');
+
+// surprise after reading this: https://stackoverflow.com/questions/17058298/error-cannot-find-module-socket-io
+// even after sudo npm install socket.io and export under macos catalina still not work
+
+var io = require('/usr/local/lib/node_modules/socket.io/') // require('socket.io');
 
 var player_count = 0;
 var display_message = "wait";
@@ -53,7 +57,7 @@ var server = http.createServer(function(request, response) {
 	switch (path) {
 		case '/':
 			response.writeHead(200, {'Content-Type': 'text/html'});
-			response.write('Hello, World.');
+			response.write('Hello, World.  Please use http://localhost:5566/index.html');
 			response.end();
 			break;
 		case '/index.html':
@@ -97,7 +101,7 @@ var server = http.createServer(function(request, response) {
 			break
 		default:
 			response.writeHead(404);
-			response.write("opps this doesn't exist - 404");
+			response.write("opps this doesn't exist - 404; please use http://localhost:5566/index.html");
 			response.end();
 			break;
 	}
